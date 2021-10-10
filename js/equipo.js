@@ -18,19 +18,22 @@ class Equipo {
  *Funcion CRAER EQUIPO
  * newEquipo.localidadEquipo = document.getElementById("localidadEquipo").value;
  */
-function crearEquipo() {
+function validarDatosEquipo() {
+  if (formulario.nombreEquipo.value == "") {
+    console.log("Error en el almacenamiento");
+  }
   const newEquipo = new Equipo();
   newEquipo.nombreEquipo = formulario.nombreEquipo.value;
   newEquipo.localidadEquipo = formulario.localidadEquipo.value;
   newEquipo.provinciaEquipo = formulario.provinciaEquipo.value;
   equipos.push(newEquipo);
-  insertarNuevaFila(newEquipo);
+  agregarFila(newEquipo);
 }
 
 /*
  *INSERTAR UN NUEVO REGISTO DE EQUIPO
  */
-function insertarNuevaFila(equipo) {
+function agregarFila(equipo) {
   let padre = document.getElementById("datos");
   let tr = document.createElement("tr");
   let td = document.createElement("td");
@@ -48,9 +51,42 @@ function insertarNuevaFila(equipo) {
   padre.appendChild(td1);
   padre.appendChild(td2);
   padre.appendChild(td3);
-  // }
 }
-
+/*
+ *Declaracion de datos
+ *obtencion de input de formulario
+ */
 const equipos = [];
-const formulario = document.forms["formEquipo"];
+// const formulario = document.forms["formEquipo"];
+
+const formulario = document.getElementById("formEquipo");
+const inputs = document.querySelectorAll("#formEquipo input");
+const validarInputFormulario = (evento) => {
+  switch (evento.target.name) {
+    case "nombreEquipo":
+      if (expresionCadena.test(evento.target.value)) {
+        document.getElementById("nombreEquipo").classList.add("btn-danger");
+      } else {
+        document.getElementById("nombreEquipo");
+      }
+      break;
+    case "localidadEquipo":
+      console.log("hace algo");
+      break;
+    case "provinciaEquipo":
+      console.log("hace algo");
+      break;
+  }
+};
 let index = 1;
+const expresionCadena = /^[s-zA-Z0-9]{2,35}$/;
+
+inputs.forEach((input) => {
+  input.addEventListener("keyup", validarInputFormulario);
+  input.addEventListener("blur", validarInputFormulario);
+});
+formulario.addEventListener("submit", (e) => {
+  e.preventDefault();
+  validarDatosEquipo();
+  formulario.reset();
+});

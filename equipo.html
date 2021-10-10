@@ -62,7 +62,7 @@
                 <div class="container">
                     <h1 class="section__titulo section__titulo--variante">Carga de Equipos</h1>
                     <hr class="section__hr section__hr--titulo">
-                    <form name="formEquipo" class="row g-3">
+                    <form name="formEquipo" id="formEquipo" class="row g-3">
                         <div class="col-md-6">
                             <label class="form-label">Nombre de Equipo</label>
                             <input type="text" class="form-control" id="nombreEquipo" name="nombreEquipo"
@@ -78,11 +78,13 @@
                             <input type="text" class="form-control" id="provinciaEquipo" name="provinciaEquipo"
                                 autocomplete="off" placeholder="Provincia en la que se desarolla">
                         </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Guardar</label>
-                            <div class="btn btn-success col-12" onclick="crearEquipo()"> Guardar Equipo
-                            </div>
-                    </form>
+                        <!-- <div class="col-md-6"> -->
+                        <!-- <label class="form-label">Accion</label> -->
+                        <!-- <div class="btn btn-success col-12" onclick="validarDatosEquipo()">
+                                Guardar Equipo
+                            </div> -->
+                        <button class=" btn btn-warning" type="submit"> Guardar Equipo</button>
+                        <!-- </form> -->
 
                 </div>
             </section>
@@ -99,7 +101,7 @@
                                 <th scope="col">Provincia</th>
                             </tr>
                         </thead>
-                        <tbody id="datos ">
+                        <tbody id="datos">
                         </tbody>
                     </table>
                 </div>
