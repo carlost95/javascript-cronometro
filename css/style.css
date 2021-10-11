@@ -102,3 +102,18 @@ body {
   margin-bottom: 0px;
   padding-left: 0px;
 }
+
+.error__formulario {
+  display: none;
+}
+
+.error__formulario--activo {
+  color: red;
+  display: block;
+}
+
+.btn-enviar {
+  background-color: #ff0066;
+  color: #fff;
+  font-size: large;
+}

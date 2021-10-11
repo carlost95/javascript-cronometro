@@ -1,0 +1,4 @@
+*********COMO ACCEDER A LOS ELEMENTOS DEL FORMULARIO DESDE ID
+document.getElementById(`equipo__${idForm}`).classList.remove("alert__invalido");
+document.getElementById(`error__${idForm}`).classList.add("alert__valido");
+document.getElementById(`error__${idForm}`).classList.add("alert__invalido");

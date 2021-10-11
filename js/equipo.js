@@ -18,75 +18,98 @@ class Equipo {
  *Funcion CRAER EQUIPO
  * newEquipo.localidadEquipo = document.getElementById("localidadEquipo").value;
  */
-function validarDatosEquipo() {
-  if (formulario.nombreEquipo.value == "") {
-    console.log("Error en el almacenamiento");
-  }
+function agregarEquipo() {
   const newEquipo = new Equipo();
-  newEquipo.nombreEquipo = formulario.nombreEquipo.value;
-  newEquipo.localidadEquipo = formulario.localidadEquipo.value;
-  newEquipo.provinciaEquipo = formulario.provinciaEquipo.value;
+  newEquipo.nombreEquipo = formulario.nombre.value;
+  newEquipo.localidadEquipo = formulario.localidad.value;
+  newEquipo.provinciaEquipo = formulario.provincia.value;
   equipos.push(newEquipo);
   agregarFila(newEquipo);
 }
 
 /*
- *INSERTAR UN NUEVO REGISTO DE EQUIPO
+ *INSERTAR UN NUEVO REGISTO DE EQUIPO EN EL HTML
  */
 function agregarFila(equipo) {
-  let padre = document.getElementById("datos");
+  let padre = document.getElementById("tablaEquipos");
   let tr = document.createElement("tr");
   let td = document.createElement("td");
   let td1 = document.createElement("td");
   let td2 = document.createElement("td");
-  let td3 = document.createElement("td");
 
-  td.innerHTML = index++;
-  td1.innerHTML = equipo.nombreEquipo;
-  td2.innerHTML = equipo.localidadEquipo;
-  td3.innerHTML = equipo.provinciaEquipo;
+  td.innerHTML = equipo.nombreEquipo;
+  td1.innerHTML = equipo.localidadEquipo;
+  td2.innerHTML = equipo.provinciaEquipo;
 
   padre.appendChild(tr);
   padre.appendChild(td);
   padre.appendChild(td1);
   padre.appendChild(td2);
-  padre.appendChild(td3);
 }
 /*
- *Declaracion de datos
- *obtencion de input de formulario
+ *DECLARACION DE ELEMENTOS A UTILIZAR
  */
+const expresionCadena = /^[a-zA-Z0-9/ /ñ]{2,30}$/;
 const equipos = [];
-// const formulario = document.forms["formEquipo"];
 
+// acceso para la validacion de input del formulario
+const equipoValido = {
+  nombre: false,
+  localidad: false,
+  provincia: false,
+};
+/*
+ *obtencion del formulario e inputs de formulario
+ */
 const formulario = document.getElementById("formEquipo");
 const inputs = document.querySelectorAll("#formEquipo input");
+
+/*
+ *VALIDACION DE INPUT DEL FORMULARIO DE EQUIPO
+ */
 const validarInputFormulario = (evento) => {
   switch (evento.target.name) {
-    case "nombreEquipo":
-      if (expresionCadena.test(evento.target.value)) {
-        document.getElementById("nombreEquipo").classList.add("btn-danger");
-      } else {
-        document.getElementById("nombreEquipo");
-      }
+    case "nombre":
+      validarInputForm(expresionCadena, evento.target, "nombre");
       break;
-    case "localidadEquipo":
-      console.log("hace algo");
+    case "localidad":
+      validarInputForm(expresionCadena, evento.target, "localidad");
+
       break;
-    case "provinciaEquipo":
-      console.log("hace algo");
+    case "provincia":
+      validarInputForm(expresionCadena, evento.target, "provincia");
       break;
   }
 };
-let index = 1;
-const expresionCadena = /^[s-zA-Z0-9]{2,35}$/;
 
+const validarInputForm = (expresion, input, idForm) => {
+  if (expresion.test(input.value)) {
+    document
+      .querySelector(`#equipo__${idForm} .error__formulario`)
+      .classList.remove("error__formulario--activo");
+    equipoValido[idForm] = true;
+  } else {
+    document
+      .querySelector(`#equipo__${idForm} .error__formulario`)
+      .classList.add("error__formulario--activo");
+    equipoValido[idForm] = false;
+  }
+};
+/*
+ *CONTROL DE EVENTOS EN LOS INPUT DEL FORMULARIO
+ */
 inputs.forEach((input) => {
   input.addEventListener("keyup", validarInputFormulario);
   input.addEventListener("blur", validarInputFormulario);
 });
-formulario.addEventListener("submit", (e) => {
-  e.preventDefault();
-  validarDatosEquipo();
-  formulario.reset();
+
+/*
+ *AGREGADO DE EVENTLISTENER
+ */
+formulario.addEventListener("submit", (evento) => {
+  evento.preventDefault();
+  if (equipoValido.nombre && equipoValido.localidad && equipoValido.provincia) {
+    agregarEquipo();
+    formulario.reset();
+  }
 });

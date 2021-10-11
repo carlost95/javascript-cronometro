@@ -63,45 +63,48 @@
                     <h1 class="section__titulo section__titulo--variante">Carga de Equipos</h1>
                     <hr class="section__hr section__hr--titulo">
                     <form name="formEquipo" id="formEquipo" class="row g-3">
-                        <div class="col-md-6">
+                        <div class="col-md-6" id="equipo__nombre" name="equipo__nombre">
                             <label class="form-label">Nombre de Equipo</label>
-                            <input type="text" class="form-control" id="nombreEquipo" name="nombreEquipo"
-                                autocomplete="off" required>
+                            <input type="text" class="form-control" autocomplete="off" id="nombre" name="nombre"
+                                placeholder="nombre" required>
+                            <strong class="error__formulario">
+                                Se debe agregar un nombre valido
+                            </strong>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6" id="equipo__localidad" name="equipo__localidad">
                             <label class="form-label">Localidad</label>
-                            <input type="text" class="form-control" id="localidadEquipo" name="localidadEquipo"
-                                autocomplete="off" required>
+                            <input type="text" class="form-control" autocomplete="on" id="localidad" name="localidad"
+                                placeholder="Chilecito" required>
+                            <strong class="error__formulario">
+                                Se debe agregar una localidad valida
+                            </strong>
                         </div>
-                        <div class="col-6">
+                        <div class="col-6" id="equipo__provincia" name="equipo__provincia">
                             <label class="form-label">Provincia</label>
-                            <input type="text" class="form-control" id="provinciaEquipo" name="provinciaEquipo"
-                                autocomplete="off" placeholder="Provincia en la que se desarolla">
+                            <input type="text" class="form-control" autocomplete="off" id="provincia" name="provincia"
+                                placeholder="La Rioja" required>
+                            <strong class="error__formulario">
+                                Se debe agregar una provincia valida
+                            </strong>
                         </div>
-                        <!-- <div class="col-md-6"> -->
-                        <!-- <label class="form-label">Accion</label> -->
-                        <!-- <div class="btn btn-success col-12" onclick="validarDatosEquipo()">
-                                Guardar Equipo
-                            </div> -->
-                        <button class=" btn btn-warning" type="submit"> Guardar Equipo</button>
-                        <!-- </form> -->
 
+                        <button class=" btn btn-enviar" type="submit"> Guardar Equipo</button>
+                    </form>
                 </div>
             </section>
             <section class="main__section section mt-3">
                 <div class="container">
                     <h2 class="section__titulo section__titulo--variante">Lista de Equipos</h2>
                     <hr class="section__hr section__hr--titulo">
-                    <table class="table">
+                    <table class="table table-danger table-hover table-striped">
                         <thead>
                             <tr>
-                                <th scope="col">Nro</th>
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Localidad</th>
                                 <th scope="col">Provincia</th>
                             </tr>
                         </thead>
-                        <tbody id="datos">
+                        <tbody id="tablaEquipos">
                         </tbody>
                     </table>
                 </div>
