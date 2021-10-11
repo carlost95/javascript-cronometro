@@ -1,0 +1,39 @@
+.navbar-container__gradiente {
+    /* GRADIENTE */
+    background: #240b36;
+    background: linear-gradient(90deg,
+            #000000 8%,
+            #969696 25%,
+            #e7e7e7 45%,
+            #ff0066 65%,
+            #b30059 85%);
+}
+
+.logo {
+    color: #ff0066;
+}
+
+.navbar-container__logo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.navbar-container__enlaces {
+    text-transform: uppercase;
+    font-family: "Roboto", sans-serif;
+    padding: 20px;
+    color: #ffffff !important;
+}
+
+.navbar-dark :hover {
+    color: rgba(0, 0, 0, 0.993) !important;
+}
+
+.logo:hover {
+    color: rgb(255, 255, 255) !important;
+}
+
+.nav-link:hover {
+    font-style: italic;
+}

@@ -64,25 +64,19 @@ body {
   text-transform: uppercase;
 }
 
-.tabla {
-  background-color: #fd477ef5;
-  text-align: center;
-  width: 100%;
+.error__formulario {
+  display: none;
 }
 
-.tabla__th,
-.tabla__td {
-  border: solid 1px rgba(0, 0, 0, 0.328);
-  padding: 0.5%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 150%;
+.error__formulario--activo {
+  color: red;
+  display: block;
 }
 
-.tabla__thead {
-  background-color: #fa436b;
-  color: whitesmoke;
+.btn-enviar {
+  background-color: #ff0066;
+  color: #fff;
+  font-size: large;
 }
 
 .footer {
@@ -101,19 +95,4 @@ body {
 .footer ul {
   margin-bottom: 0px;
   padding-left: 0px;
-}
-
-.error__formulario {
-  display: none;
-}
-
-.error__formulario--activo {
-  color: red;
-  display: block;
-}
-
-.btn-enviar {
-  background-color: #ff0066;
-  color: #fff;
-  font-size: large;
 }
