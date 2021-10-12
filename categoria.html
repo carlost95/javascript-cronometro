@@ -6,7 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Running | corredor</title>
+        <title>Running | Categoria</title>
         <!-- LINK DE ESTILOS -->
         <!-- LINKS EXTERNOS -->
         <!-- bootstrap -->
@@ -60,13 +60,63 @@
         <main class="main">
             <section class="main__section section">
                 <div class="container">
-                    <h1 class="section__titulo section__titulo--variante">Carga de categoria</h1>
+                    <h1 class="section__titulo section__titulo--variante">Carga de Categoria</h1>
                     <hr class="section__hr section__hr--titulo">
-
+                    <form name="formCategoria" id="formCategoria" class="row g-3">
+                        <div class="col-md-6" id="categoria__nombre" name="categoria__nombre">
+                            <label class="form-label">Nombre de Categoria</label>
+                            <input type="text" class="form-control" autocomplete="off" id="nombre" name="nombre"
+                                placeholder="nombre" required>
+                            <strong class="error__formulario">
+                                Se debe agregar un nombre sin caracteres especiales
+                            </strong>
+                        </div>
+                        <div class="col-md-6" id="categoria__rangoMinimo" name="categoria__rangoMinimo">
+                            <label class="form-label">Rango Minimo de Edad</label>
+                            <input type="number" class="form-control" autocomplete="on" id="rangoMinimo"
+                                name="rangoMinimo" placeholder="Edad minima" required>
+                            <strong class="error__formulario">
+                                Se debe agregar una rango de edad valida (no letras)
+                            </strong>
+                        </div>
+                        <div class="col-md-6" id="categoria__rangoMaximo" name="categoria__rangoMaximo">
+                            <label class="form-label">Rango Maximo de Edad</label>
+                            <input type="number" class="form-control" autocomplete="on" id="rangoMaximo"
+                                name="rangoMaximo" placeholder="Edad maxima" required>
+                            <strong class="error__formulario">
+                                Se debe agregar una rango de edad valida (no letras)
+                            </strong>
+                        </div>
+                        <div class="col-6" id="categoria__descripcion" name="categoria__descripcion">
+                            <label class="form-label">Descripcion</label>
+                            <input type="text" class="form-control" autocomplete="off" id="descripcion"
+                                name="descripcion" placeholder="Descripcion">
+                            <strong class="error__formulario">
+                                Se debe agregar una descripcion valida
+                            </strong>
+                        </div>
+                        <button class="btn btn-enviar" type="submit"> Guardar Categoria</button>
+                    </form>
                 </div>
             </section>
-
-
+            <section class="main__section section mt-3">
+                <div class="container">
+                    <h2 class="section__titulo section__titulo--variante">Lista de Equipos</h2>
+                    <hr>
+                    <table class="table table-danger table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Edad Minima</th>
+                                <th scope="col">Edad Maxima</th>
+                                <th scope="col">Descripcion</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaCategorias">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
         </main>
         <footer class=" footer">
             <div class="footer__redesSociales">
