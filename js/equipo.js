@@ -15,6 +15,30 @@ class Equipo {
   }
 }
 /*
+ *METODO DE ORDENAMIENTO SORT
+ */
+function pruebaEquipoSort() {
+  let equipo1 = new Equipo("Espectro", "Chilecito", "La Rioja");
+  equipos.push(equipo1);
+  let equipo2 = new Equipo("Trotas", "Chilecito", "La Rioja");
+  equipos.push(equipo2);
+  let equipo3 = new Equipo("Agilas", "Chilecito", "La Rioja");
+  equipos.push(equipo3);
+}
+/*
+ *METODO DE COMPARACION
+ */
+function compareTo(a, b) {
+  if (a.nombreEquipo > b.nombreEquipo) {
+    return 1;
+  }
+  if (a.nombreEquipo < b.nombreEquipo) {
+    return -1;
+  }
+  return 0;
+}
+
+/*
  *Funcion CRAER EQUIPO
  * newEquipo.localidadEquipo = document.getElementById("localidadEquipo").value;
  */
@@ -113,3 +137,8 @@ formulario.addEventListener("submit", (evento) => {
     formulario.reset();
   }
 });
+/*
+ *funcionalidad de metodos de ordenamiento
+ */
+pruebaEquipoSort();
+console.log(equipos.sort(compareTo));
