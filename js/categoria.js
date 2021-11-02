@@ -18,6 +18,7 @@ function agregarCategoria() {
   newCategoria.rangoEdadMaxima = formulario.rangoMaximo.value;
   newCategoria.descripcion = formulario.descripcion.value;
   categorias.push(newCategoria);
+  localStorage.setItem("categorias", JSON.stringify(categorias));
   newCategoria.mostrarDatos();
   agregarFila(newCategoria);
 }

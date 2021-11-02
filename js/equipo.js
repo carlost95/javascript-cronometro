@@ -48,6 +48,7 @@ function agregarEquipo() {
   newEquipo.localidadEquipo = formulario.localidad.value;
   newEquipo.provinciaEquipo = formulario.provincia.value;
   equipos.push(newEquipo);
+  localStorage.setItem("equipos", JSON.stringify(equipos));
   agregarFila(newEquipo);
 }
 
