@@ -15,33 +15,20 @@
 //     console.log(this.equipo);
 //   }
 // }
-const equipos = [
-  {
-    id: 1,
-    nombre: "trota",
-  },
-  {
-    id: 2,
-    nombre: "trota2",
-  },
-  {
-    id: 3,
-    nombre: "trota3",
-  },
-];
 
 // function crearCorredor() {
 //   const newCorredor = new Corredor();
 //   return newCorredor;
 // }
+equipos = JSON.parse(localStorage.getItem("equipos"));
+console.log(equipos);
+cargarEquipo();
 function cargarCategoria() {}
 
 function cargarEquipo() {
   const equipoSelected = $("#equipos");
   for (const equipo of equipos) {
-    equipoSelected.append(
-      `<option value"${equipo.id}">${equipo.nombre}</option>`
-    );
+    equipoSelected.append(`<option ">${equipo.nombreEquipo}</option>`);
     console.log(equipo);
   }
 }
