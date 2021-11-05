@@ -21,8 +21,6 @@
   "devDependencies": {
     "node-sass": "^6.0.1",
     "nodemon": "^2.0.13"
-  },
-  "dependencies": {
-    "easytimer.js": "^4.5.1"
   }
+
 }
