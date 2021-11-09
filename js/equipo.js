@@ -37,7 +37,21 @@ function compareTo(a, b) {
   }
   return 0;
 }
-
+/*
+ * consultas API REST de Provincias y localidades
+ */
+const URLAPI = " https://apis.datos.gob.ar/georef/api/provincias";
+function obtenerProvincias() {
+  $.getJSON(URLAPI, function (response, estado) {
+    if (estado === "success") {
+      const provincias = response.provincias;
+      for (const items of provincias) {
+        console.log(items.id);
+        console.log(items.nombre);
+      }
+    }
+  });
+}
 /*
  *Funcion CRAER EQUIPO
  * newEquipo.localidadEquipo = document.getElementById("localidadEquipo").value;
@@ -141,5 +155,7 @@ formulario.addEventListener("submit", (evento) => {
 /*
  *funcionalidad de metodos de ordenamiento
  */
+
+obtenerProvincias();
 pruebaEquipoSort();
-console.log(equipos.sort(compareTo));
+// console.log(equipos.sort(compareTo));
