@@ -41,19 +41,44 @@ function compareTo(a, b) {
  * consultas API REST de Provincias y localidades
  */
 const URLAPI = " https://apis.datos.gob.ar/georef/api/provincias";
+
 function obtenerProvincias() {
+  const provSelect = $("#provincia");
   $.getJSON(URLAPI, function (response, estado) {
     if (estado === "success") {
       const provincias = response.provincias;
       for (const items of provincias) {
-        console.log(items.id);
-        console.log(items.nombre);
+        // console.log(items.nombre);
+        provSelect.append(`<option value=${items.id}>${items.nombre}</option>`);
       }
     }
   });
 }
 /*
- *Funcion CRAER EQUIPO
+ *Funcion carga de municipios  al select localidad
+ */
+$("#provincia").change((event) => {
+  const idProvincia = event.target.value;
+  const URLAPIMUNI = `https://apis.datos.gob.ar/georef/api/municipios?provincia=${idProvincia}&campos=id,nombre&max=100`;
+  cargarMinicipio(URLAPIMUNI);
+});
+
+function cargarMinicipio(URLAPIMUNI) {
+  console.log("entre");
+  const munSelect = $("#localidad");
+  $("#localidad").html("");
+  $.getJSON(URLAPIMUNI, function (response, estado) {
+    if (estado === "success") {
+      const localidades = response.municipios;
+      for (const local of localidades) {
+        munSelect.append(`<option ">${local.nombre}</option>`);
+        // console.log("Municipios");console.log(local.nombre);
+      }
+    }
+  });
+}
+/*
+ *Funcion CREAR EQUIPO
  * newEquipo.localidadEquipo = document.getElementById("localidadEquipo").value;
  */
 function agregarEquipo() {

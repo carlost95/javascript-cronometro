@@ -71,22 +71,27 @@
                                 Se debe agregar un nombre valido
                             </strong>
                         </div>
-                        <div class="col-md-6" id="equipo__localidad" name="equipo__localidad">
-                            <label class="form-label">Localidad</label>
-                            <input type="text" class="form-control" autocomplete="on" id="localidad" name="localidad"
-                                placeholder="Chilecito" required>
-                            <strong class="error__formulario">
-                                Se debe agregar una localidad valida
-                            </strong>
-                        </div>
                         <div class="col-6" id="equipo__provincia" name="equipo__provincia">
                             <label class="form-label">Provincia</label>
-                            <input type="text" class="form-control" autocomplete="off" id="provincia" name="provincia"
-                                placeholder="La Rioja" required>
+                            <select class="form-select" id="provincia">
+                                <option value="">Provincia</option>
+                            </select>
                             <strong class="error__formulario">
                                 Se debe agregar una provincia valida
                             </strong>
                         </div>
+                        <div class="col-md-6" id="equipo__localidad" name="equipo__localidad">
+                            <label class="form-label">Localidad</label>
+                            <!-- <input type="text" class="form-control" autocomplete="on" id="localidad" name="localidad"
+                                placeholder="Chilecito" required> -->
+                            <select class="form-select" id="localidad">
+                                <option value="">Localidad</option>
+                            </select>
+                            <strong class="error__formulario">
+                                Se debe agregar una localidad valida
+                            </strong>
+                        </div>
+
 
                         <button class=" btn btn-enviar" type="submit"> Guardar Equipo</button>
                     </form>
