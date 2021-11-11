@@ -73,7 +73,7 @@
                         </div>
                         <div class="col-6" id="equipo__provincia" name="equipo__provincia">
                             <label class="form-label">Provincia</label>
-                            <select class="form-select" id="provincia">
+                            <select class="form-select" id="provincia" name="provinciaSelect">
                                 <option value="">Provincia</option>
                             </select>
                             <strong class="error__formulario">
@@ -82,9 +82,7 @@
                         </div>
                         <div class="col-md-6" id="equipo__localidad" name="equipo__localidad">
                             <label class="form-label">Localidad</label>
-                            <!-- <input type="text" class="form-control" autocomplete="on" id="localidad" name="localidad"
-                                placeholder="Chilecito" required> -->
-                            <select class="form-select" id="localidad">
+                            <select class="form-select" id="localidad" name="localidadSelect">
                                 <option value="">Localidad</option>
                             </select>
                             <strong class="error__formulario">
@@ -105,8 +103,8 @@
                         <thead>
                             <tr>
                                 <th scope="col">Nombre</th>
-                                <th scope="col">Localidad</th>
                                 <th scope="col">Provincia</th>
+                                <th scope="col">Localidad</th>
                             </tr>
                         </thead>
                         <tbody id="tablaEquipos">

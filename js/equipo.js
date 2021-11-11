@@ -28,27 +28,19 @@ function pruebaEquipoSort() {
 /*
  *METODO DE COMPARACION
  */
-function compareTo(a, b) {
-  if (a.nombreEquipo > b.nombreEquipo) {
-    return 1;
-  }
-  if (a.nombreEquipo < b.nombreEquipo) {
-    return -1;
-  }
-  return 0;
-}
+
 /*
  * consultas API REST de Provincias y localidades
  */
 const URLAPI = " https://apis.datos.gob.ar/georef/api/provincias";
 
 function obtenerProvincias() {
+  console.log("carga de provincias");
   const provSelect = $("#provincia");
   $.getJSON(URLAPI, function (response, estado) {
     if (estado === "success") {
       const provincias = response.provincias;
       for (const items of provincias) {
-        // console.log(items.nombre);
         provSelect.append(`<option value=${items.id}>${items.nombre}</option>`);
       }
     }
@@ -64,14 +56,13 @@ $("#provincia").change((event) => {
 });
 
 function cargarMinicipio(URLAPIMUNI) {
-  console.log("entre");
   const munSelect = $("#localidad");
   $("#localidad").html("");
   $.getJSON(URLAPIMUNI, function (response, estado) {
     if (estado === "success") {
       const localidades = response.municipios;
       for (const local of localidades) {
-        munSelect.append(`<option ">${local.nombre}</option>`);
+        munSelect.append(`<option value=${local.id}>${local.nombre}</option>`);
         // console.log("Municipios");console.log(local.nombre);
       }
     }
@@ -83,9 +74,12 @@ function cargarMinicipio(URLAPIMUNI) {
  */
 function agregarEquipo() {
   const newEquipo = new Equipo();
+  let indexProv = document.formEquipo.provinciaSelect.selectedIndex;
+  let indexLoc = document.formEquipo.localidadSelect.selectedIndex;
+
   newEquipo.nombreEquipo = formulario.nombre.value;
-  newEquipo.localidadEquipo = formulario.localidad.value;
-  newEquipo.provinciaEquipo = formulario.provincia.value;
+  newEquipo.provinciaEquipo = formulario.provincia.options[indexProv].text;
+  newEquipo.localidadEquipo = formulario.localidad.options[indexLoc].text;
   equipos.push(newEquipo);
   localStorage.setItem("equipos", JSON.stringify(equipos));
   agregarFila(newEquipo);
@@ -95,20 +89,13 @@ function agregarEquipo() {
  *INSERTAR UN NUEVO REGISTO DE EQUIPO EN EL HTML
  */
 function agregarFila(equipo) {
-  let padre = document.getElementById("tablaEquipos");
-  let tr = document.createElement("tr");
-  let td = document.createElement("td");
-  let td1 = document.createElement("td");
-  let td2 = document.createElement("td");
-
-  td.innerHTML = equipo.nombreEquipo;
-  td1.innerHTML = equipo.localidadEquipo;
-  td2.innerHTML = equipo.provinciaEquipo;
-
-  padre.appendChild(tr);
-  padre.appendChild(td);
-  padre.appendChild(td1);
-  padre.appendChild(td2);
+  const tablaEquipos = $("#tablaEquipos");
+  tablaEquipos.fadeIn(3000).append(`<tr>
+  <td>${equipo.nombreEquipo}</td>
+  <td>${equipo.provinciaEquipo}</td>
+  <td>${equipo.localidadEquipo}</td>
+  </tr>
+  `);
 }
 /*
  *DECLARACION DE ELEMENTOS A UTILIZAR
@@ -132,20 +119,24 @@ const inputs = document.querySelectorAll("#formEquipo input");
  *VALIDACION DE INPUT DEL FORMULARIO DE EQUIPO
  */
 const validarInputFormulario = (evento) => {
+  console.log("Muestra");
+  console.warn(evento.target.value);
   switch (evento.target.name) {
     case "nombre":
       validarInputForm(expresionCadena, evento.target, "nombre");
       break;
-    case "localidad":
-      validarInputForm(expresionCadena, evento.target, "localidad");
-
-      break;
     case "provincia":
-      validarInputForm(expresionCadena, evento.target, "provincia");
+      validarInputFormSelect(evento.target, "provincia");
+      break;
+    case "localidad":
+      validarInputFormSelect(evento.target, "localidad");
+
       break;
   }
 };
-
+const validarInputFormSelect = (input, idSelect) => {
+  console.log(input);
+};
 const validarInputForm = (expresion, input, idForm) => {
   if (expresion.test(input.value)) {
     document
@@ -172,15 +163,23 @@ inputs.forEach((input) => {
  */
 formulario.addEventListener("submit", (evento) => {
   evento.preventDefault();
-  if (equipoValido.nombre && equipoValido.localidad && equipoValido.provincia) {
+  console.error(
+    "valores de equipo -->",
+    equipoValido.nombre,
+    equipoValido.localidad,
+    equipoValido.provincia
+  );
+  if (
+    equipoValido.nombre &&
+    !equipoValido.localidad &&
+    !equipoValido.provincia
+  ) {
     agregarEquipo();
     formulario.reset();
   }
 });
+obtenerProvincias();
+
 /*
  *funcionalidad de metodos de ordenamiento
  */
-
-obtenerProvincias();
-pruebaEquipoSort();
-// console.log(equipos.sort(compareTo));
