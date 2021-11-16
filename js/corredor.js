@@ -32,3 +32,9 @@ function cargarEquipo() {
     console.log(equipo);
   }
 }
+
+$("#idReloj");
+/*
+ *Tomar el tiempo que se encuentra en el momento desde
+ *la pantalla de inicio del cronometro
+ */

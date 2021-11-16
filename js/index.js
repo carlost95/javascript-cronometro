@@ -45,3 +45,5 @@ timer.addEventListener("reset", function (e) {
       .toString(["hours", "minutes", "seconds", "secondTenths"])
   );
 });
+const reloj = $("#chronoExample .values");
+console.log(reloj.timer.getTimeValues());
