@@ -66,15 +66,33 @@
                 </div>
             </section>
             <div id="chronoExample">
-                <div class="values" id="idReloj" style="font-size: xx-large;">00:00:00:00</div>
-                <div>
-                    <button class="startButton btn btn-success">Start</button>
-                    <button class="pauseButton btn btn-primary">Pause</button>
-                    <button class="stopButton btn btn-warning">Stop</button>
-                    <button class="resetButton btn btn-danger">Reset</button>
+                <div class="values col-md-12 my-3"
+                    style="font-size: xx-large; border:1px solid #000;display: flex;align-items: center; align-content: center;">
+                    <div>00:00:00:00</div>
+                </div>
+                <div class="row">
+                    <button class="startButton btn btn-success col-2 me-1">Iniciar</button>
+                    <button class="pauseButton btn btn-primary col-2 me-1">Pausar</button>
+                    <button class="stopButton btn btn-warning col-2 me-1">Detener</button>
+                    <button class="resetButton btn btn-danger col-2 me-1">Reiniciar</button>
+                    <div class="col-3 ml-4 ">
+                        <input class="form-control me-2" id="numero">
+                    </div>
                 </div>
             </div>
-
+            &nbsp;
+            <table class="table table-danger table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Hora</th>
+                        <th scope="col">Minutos</th>
+                        <th scope="col">Segundos</th>
+                        <th scope="col">Milesimas</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaEquipos">
+                </tbody>
+            </table>
         </main>
         <footer class=" footer">
             <div>

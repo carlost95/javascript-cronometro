@@ -26,8 +26,17 @@ function pruebaEquipoSort() {
   equipos.push(equipo3);
 }
 /*
- *METODO DE COMPARACION
+ *CARGAR EQUIPOS EXISTENTES EN LOCAL STORAGE
  */
+function cargarEquiposExistentes() {
+  equiposCargados = JSON.parse(localStorage.getItem("equipos"));
+  console.log(equiposCargados);
+  if (equiposCargados.length != 0) {
+    equiposCargados.forEach((eqp) => {
+      agregarFila(eqp);
+    });
+  }
+}
 
 /*
  * consultas API REST de Provincias y localidades
@@ -35,7 +44,6 @@ function pruebaEquipoSort() {
 const URLAPI = " https://apis.datos.gob.ar/georef/api/provincias";
 
 function obtenerProvincias() {
-  console.log("carga de provincias");
   const provSelect = $("#provincia");
   $.getJSON(URLAPI, function (response, estado) {
     if (estado === "success") {
@@ -102,6 +110,7 @@ function agregarFila(equipo) {
  */
 const expresionCadena = /^[a-zA-Z0-9/ /ñ]{2,30}$/;
 const equipos = [];
+let equiposCargados = [];
 
 // acceso para la validacion de input del formulario
 const equipoValido = {
@@ -114,28 +123,42 @@ const equipoValido = {
  */
 const formulario = document.getElementById("formEquipo");
 const inputs = document.querySelectorAll("#formEquipo input");
+const selections = document.querySelectorAll("#formEquipo select");
 
 /*
  *VALIDACION DE INPUT DEL FORMULARIO DE EQUIPO
  */
 const validarInputFormulario = (evento) => {
-  console.log("Muestra");
-  console.warn(evento.target.value);
+  console.log("validaSelect " + evento.target.name);
   switch (evento.target.name) {
     case "nombre":
       validarInputForm(expresionCadena, evento.target, "nombre");
       break;
-    case "provincia":
+    case "provinciaSelect":
       validarInputFormSelect(evento.target, "provincia");
       break;
-    case "localidad":
+    case "localidadSelect":
       validarInputFormSelect(evento.target, "localidad");
-
       break;
   }
 };
-const validarInputFormSelect = (input, idSelect) => {
-  console.log(input);
+const validarInputFormSelect = () => {
+  let provForm = document.forms["formEquipo"]["provinciaSelect"].selectedIndex;
+  // let nomProv = formulario.provincia.options[indexProv].text;
+  console.log(provForm);
+  if (provForm != 0) {
+    console.log("PROVINCIA");
+    document
+      .querySelector("#equipo__provincia .error__formulario")
+      .classList.remove("error__formulario--activo");
+    equipoValido["equipoProvincia"] = true;
+  } else {
+    console.log("PROVINCIA else");
+    document
+      .querySelector("#equipo__provincia .error__formulario")
+      .classList.add("error__formulario--activo");
+    equipoValido["equipoProvincia"] = false;
+  }
 };
 const validarInputForm = (expresion, input, idForm) => {
   if (expresion.test(input.value)) {
@@ -157,7 +180,9 @@ inputs.forEach((input) => {
   input.addEventListener("keyup", validarInputFormulario);
   input.addEventListener("blur", validarInputFormulario);
 });
-
+selections.forEach((select) => {
+  select.addEventListener("click", validarInputFormSelect);
+});
 /*
  *AGREGADO DE EVENTLISTENER
  */
@@ -166,20 +191,14 @@ formulario.addEventListener("submit", (evento) => {
   console.error(
     "valores de equipo -->",
     equipoValido.nombre,
-    equipoValido.localidad,
-    equipoValido.provincia
+    equipoValido.provincia,
+    equipoValido.localidad
   );
-  if (
-    equipoValido.nombre &&
-    !equipoValido.localidad &&
-    !equipoValido.provincia
-  ) {
+  if (equipoValido.nombre && equipoValido.provincia && equipoValido.localidad) {
     agregarEquipo();
     formulario.reset();
   }
 });
-obtenerProvincias();
 
-/*
- *funcionalidad de metodos de ordenamiento
- */
+cargarEquiposExistentes();
+obtenerProvincias();

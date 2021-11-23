@@ -1,4 +1,3 @@
-const timerInstance = new Timer();
 const timer = new Timer();
 
 $("#chronoExample .startButton").click(function () {
@@ -20,14 +19,7 @@ $("#chronoExample .stopButton").click(function () {
 $("#chronoExample .resetButton").click(function () {
   timer.stop({ precision: "secondTenths" });
   timer.start({ precision: "secondTenths" });
-});
-
-timer.addEventListener("secondsUpdated", function (e) {
-  $("#chronoExample .values").html(
-    timer
-      .getTimeValues()
-      .toString(["hours", "minutes", "seconds", "secondTenths"])
-  );
+  // timer.pause({ precision: "secondTenths" });
 });
 
 timer.addEventListener("secondTenthsUpdated", function (e) {
@@ -38,12 +30,15 @@ timer.addEventListener("secondTenthsUpdated", function (e) {
   );
 });
 
-timer.addEventListener("reset", function (e) {
-  $("#chronoExample .values").html(
-    timer
-      .getTimeValues()
-      .toString(["hours", "minutes", "seconds", "secondTenths"])
-  );
+const dorsal = $("#numero").keypress(function (evento) {
+  if (evento.keyCode == 13) {
+    console.log(
+      "ingreso " +
+        timer
+          .getTimeValues()
+          .toString(["hours", "minutes", "seconds", "secondTenths"])
+    );
+    console.log(dorsal.val());
+    dorsal.val("");
+  }
 });
-const reloj = $("#chronoExample .values");
-console.log(reloj.timer.getTimeValues());
