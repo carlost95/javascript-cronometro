@@ -7,12 +7,6 @@ class Equipo {
     this.localidadEquipo = localidadEquipo;
     this.provinciaEquipo = provinciaEquipo;
   }
-  mostrarDatos() {
-    console.log("CARGA DE EQUIPO");
-    console.log("Nombre: " + this.nombreEquipo + " ");
-    console.log("Localidad: " + this.localidadEquipo + " ");
-    console.log("Provincia: " + this.provinciaEquipo);
-  }
 }
 /*
  *METODO DE ORDENAMIENTO SORT
@@ -30,18 +24,19 @@ function pruebaEquipoSort() {
  */
 function cargarEquiposExistentes() {
   equiposCargados = JSON.parse(localStorage.getItem("equipos"));
-  console.log(equiposCargados);
-  if (equiposCargados.length != 0) {
+  if (equiposCargados != null && equiposCargados.length != 0) {
     equiposCargados.forEach((eqp) => {
       agregarFila(eqp);
     });
+  } else {
+    console.log("No existen equipos cargados");
   }
 }
 
 /*
  * consultas API REST de Provincias y localidades
  */
-const URLAPI = " https://apis.datos.gob.ar/georef/api/provincias";
+const URLAPI = "https://apis.datos.gob.ar/georef/api/provincias";
 
 function obtenerProvincias() {
   const provSelect = $("#provincia");
@@ -71,7 +66,6 @@ function cargarMinicipio(URLAPIMUNI) {
       const localidades = response.municipios;
       for (const local of localidades) {
         munSelect.append(`<option value=${local.id}>${local.nombre}</option>`);
-        // console.log("Municipios");console.log(local.nombre);
       }
     }
   });
@@ -82,15 +76,15 @@ function cargarMinicipio(URLAPIMUNI) {
  */
 function agregarEquipo() {
   const newEquipo = new Equipo();
-  let indexProv = document.formEquipo.provinciaSelect.selectedIndex;
-  let indexLoc = document.formEquipo.localidadSelect.selectedIndex;
+  let indexProv = document.formEquipo.provincia.selectedIndex;
+  let indexLoc = document.formEquipo.localidad.selectedIndex;
 
   newEquipo.nombreEquipo = formulario.nombre.value;
   newEquipo.provinciaEquipo = formulario.provincia.options[indexProv].text;
   newEquipo.localidadEquipo = formulario.localidad.options[indexLoc].text;
   equipos.push(newEquipo);
-  localStorage.setItem("equipos", JSON.stringify(equipos));
   agregarFila(newEquipo);
+  localStorage.setItem("equipos", JSON.stringify(equipos));
 }
 
 /*
@@ -118,6 +112,7 @@ const equipoValido = {
   localidad: false,
   provincia: false,
 };
+
 /*
  *obtencion del formulario e inputs de formulario
  */
@@ -129,37 +124,41 @@ const selections = document.querySelectorAll("#formEquipo select");
  *VALIDACION DE INPUT DEL FORMULARIO DE EQUIPO
  */
 const validarInputFormulario = (evento) => {
-  console.log("validaSelect " + evento.target.name);
   switch (evento.target.name) {
     case "nombre":
       validarInputForm(expresionCadena, evento.target, "nombre");
       break;
-    case "provinciaSelect":
-      validarInputFormSelect(evento.target, "provincia");
+    case "provincia":
+      validarInputFormSelect("provincia");
       break;
-    case "localidadSelect":
-      validarInputFormSelect(evento.target, "localidad");
+    case "localidad":
+      validarInputFormSelect("localidad");
       break;
   }
 };
-const validarInputFormSelect = () => {
-  let provForm = document.forms["formEquipo"]["provinciaSelect"].selectedIndex;
-  // let nomProv = formulario.provincia.options[indexProv].text;
+
+/*
+ *VALIDACION DE SELECT EN LOS FORMULARIOS CON FUNCIONES
+ */
+const validarInputFormSelect = (idForm) => {
+  let provForm = document.forms["formEquipo"][idForm].selectedIndex;
   console.log(provForm);
   if (provForm != 0) {
-    console.log("PROVINCIA");
     document
-      .querySelector("#equipo__provincia .error__formulario")
+      .querySelector(`#equipo__${idForm} .error__formulario`)
       .classList.remove("error__formulario--activo");
-    equipoValido["equipoProvincia"] = true;
+    equipoValido[idForm] = true;
   } else {
     console.log("PROVINCIA else");
     document
-      .querySelector("#equipo__provincia .error__formulario")
+      .querySelector(`#equipo__${idForm} .error__formulario`)
       .classList.add("error__formulario--activo");
-    equipoValido["equipoProvincia"] = false;
+    equipoValido[idForm] = false;
   }
 };
+/*
+ *VALIDACION DE INPUT EN LOS FORMULARIOS CON FUNCIONES
+ */
 const validarInputForm = (expresion, input, idForm) => {
   if (expresion.test(input.value)) {
     document
@@ -181,19 +180,15 @@ inputs.forEach((input) => {
   input.addEventListener("blur", validarInputFormulario);
 });
 selections.forEach((select) => {
-  select.addEventListener("click", validarInputFormSelect);
+  select.addEventListener("click", validarInputFormulario);
+  select.addEventListener("keyup", validarInputFormulario);
 });
 /*
  *AGREGADO DE EVENTLISTENER
  */
 formulario.addEventListener("submit", (evento) => {
   evento.preventDefault();
-  console.error(
-    "valores de equipo -->",
-    equipoValido.nombre,
-    equipoValido.provincia,
-    equipoValido.localidad
-  );
+
   if (equipoValido.nombre && equipoValido.provincia && equipoValido.localidad) {
     agregarEquipo();
     formulario.reset();
