@@ -11,25 +11,26 @@ class Equipo {
 /*
  *METODO DE ORDENAMIENTO SORT
  */
-function pruebaEquipoSort() {
-  let equipo1 = new Equipo("Espectro", "Chilecito", "La Rioja");
-  equipos.push(equipo1);
-  let equipo2 = new Equipo("Trotas", "Chilecito", "La Rioja");
-  equipos.push(equipo2);
-  let equipo3 = new Equipo("Agilas", "Chilecito", "La Rioja");
-  equipos.push(equipo3);
-}
+// function pruebaEquipoSort() {
+//   let equipo1 = new Equipo("Espectro", "Chilecito", "La Rioja");
+//   equipos.push(equipo1);
+//   let equipo2 = new Equipo("Trotas", "Chilecito", "La Rioja");
+//   equipos.push(equipo2);
+//   let equipo3 = new Equipo("Agilas", "Chilecito", "La Rioja");
+//   equipos.push(equipo3);
+// }
 /*
  *CARGAR EQUIPOS EXISTENTES EN LOCAL STORAGE
  */
 function cargarEquiposExistentes() {
-  equiposCargados = JSON.parse(localStorage.getItem("equipos"));
+  let equiposCargados = JSON.parse(localStorage.getItem("equipos"));
   if (equiposCargados != null && equiposCargados.length != 0) {
-    equiposCargados.forEach((eqp) => {
+    for (const eqp in equiposCargados) {
+      console.log("equipo-->" + eqp);
       agregarFila(eqp);
-    });
+    }
   } else {
-    console.log("No existen equipos cargados");
+    equiposCargados = [];
   }
 }
 
@@ -64,6 +65,7 @@ function cargarMinicipio(URLAPIMUNI) {
   $.getJSON(URLAPIMUNI, function (response, estado) {
     if (estado === "success") {
       const localidades = response.municipios;
+      munSelect.append(`<option value=${0}>Localidad</option>`);
       for (const local of localidades) {
         munSelect.append(`<option value=${local.id}>${local.nombre}</option>`);
       }
@@ -82,9 +84,14 @@ function agregarEquipo() {
   newEquipo.nombreEquipo = formulario.nombre.value;
   newEquipo.provinciaEquipo = formulario.provincia.options[indexProv].text;
   newEquipo.localidadEquipo = formulario.localidad.options[indexLoc].text;
+
   equipos.push(newEquipo);
-  agregarFila(newEquipo);
-  localStorage.setItem("equipos", JSON.stringify(equipos));
+  const storageEquipos = JSON.parse(localStorage.getItem("equipos")) || [];
+  const todosEquipos = [...storageEquipos, newEquipo];
+
+  agregarFila(newEquipo); //AGREGAR UNA FILA EN LA TABLA
+
+  localStorage.setItem("equipos", JSON.stringify(todosEquipos));
 }
 
 /*
@@ -103,8 +110,8 @@ function agregarFila(equipo) {
  *DECLARACION DE ELEMENTOS A UTILIZAR
  */
 const expresionCadena = /^[a-zA-Z0-9/ /ñ]{2,30}$/;
-const equipos = [];
 let equiposCargados = [];
+let equipos = [];
 
 // acceso para la validacion de input del formulario
 const equipoValido = {
@@ -142,14 +149,12 @@ const validarInputFormulario = (evento) => {
  */
 const validarInputFormSelect = (idForm) => {
   let provForm = document.forms["formEquipo"][idForm].selectedIndex;
-  console.log(provForm);
   if (provForm != 0) {
     document
       .querySelector(`#equipo__${idForm} .error__formulario`)
       .classList.remove("error__formulario--activo");
     equipoValido[idForm] = true;
   } else {
-    console.log("PROVINCIA else");
     document
       .querySelector(`#equipo__${idForm} .error__formulario`)
       .classList.add("error__formulario--activo");

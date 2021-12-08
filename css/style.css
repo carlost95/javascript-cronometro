@@ -14,7 +14,14 @@ body {
 .navbar-container__gradiente {
   /* GRADIENTE */
   background: #240b36;
-  background: linear-gradient(90deg, #000000 8%, #969696 25%, #e7e7e7 45%, #ff0066 65%, #b30059 85%);
+  background: linear-gradient(
+    90deg,
+    #000000 8%,
+    #969696 25%,
+    #e7e7e7 45%,
+    #ff0066 65%,
+    #b30059 85%
+  );
 }
 
 .logo {

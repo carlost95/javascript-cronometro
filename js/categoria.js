@@ -17,8 +17,9 @@ function agregarCategoria() {
   newCategoria.rangoEdadMinima = formulario.rangoMinimo.value;
   newCategoria.rangoEdadMaxima = formulario.rangoMaximo.value;
   newCategoria.descripcion = formulario.descripcion.value;
-  categorias.push(newCategoria);
-  localStorage.setItem("categorias", JSON.stringify(categorias));
+  let newCat = [];
+  newCat = categorias.concat(newCategoria);
+  localStorage.setItem("categorias", JSON.stringify(newCat));
   newCategoria.mostrarDatos();
   agregarFila(newCategoria);
 }
@@ -27,23 +28,14 @@ function agregarCategoria() {
  *INSERTAR UN NUEVO REGISTO DE CATEGORIA EN EL HTML
  */
 function agregarFila(categoria) {
-  let padre = document.getElementById("tablaCategorias");
-  let tr = document.createElement("tr");
-  let td = document.createElement("td");
-  let td1 = document.createElement("td");
-  let td2 = document.createElement("td");
-  let td3 = document.createElement("td");
-
-  td.innerHTML = categoria.nombreCategoria;
-  td1.innerHTML = categoria.rangoEdadMinima;
-  td2.innerHTML = categoria.rangoEdadMaxima;
-  td3.innerHTML = categoria.descripcion;
-
-  padre.appendChild(tr);
-  padre.appendChild(td);
-  padre.appendChild(td1);
-  padre.appendChild(td2);
-  padre.appendChild(td3);
+  const tablaEquipos = $("#tablaCategorias");
+  tablaEquipos.fadeIn(3000).append(`<tr>
+  <td>${categoria.nombreCategoria}</td>
+  <td>${categoria.rangoEdadMinima}</td>
+  <td>${categoria.rangoEdadMaxima}</td>
+  <td>${categoria.descripcion}</td>
+  </tr>
+  `);
 }
 /*
  *DECLARACION DE ELEMENTOS A UTILIZAR
