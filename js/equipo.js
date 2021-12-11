@@ -13,14 +13,22 @@ class Equipo {
  !CARGAR EQUIPOS EXISTENTES EN LOCAL STORAGE
  */
 function cargarEquiposExistentes() {
-  let equiposCargados = JSON.parse(localStorage.getItem("equipos"));
-  if (equiposCargados != null && equiposCargados.length != 0) {
-    for (const eqp of equiposCargados) {
-      agregarFila(eqp);
+  $.getJSON(`http://localhost:3000/equipos`, function (response, estado) {
+    if (estado === "success") {
+      const equipos = response;
+      for (const equipo of equipos) {
+        agregarFila(equipo);
+      }
     }
-  } else {
-    equiposCargados = [];
-  }
+  })
+  // let equiposCargados = JSON.parse(localStorage.getItem("equipos"));
+  // if (equiposCargados != null && equiposCargados.length != 0) {
+  //   for (const eqp of equiposCargados) {
+  //     agregarFila(eqp);
+  //   }
+  // } else {
+  //   equiposCargados = [];
+  // }
 }
 
 /*
@@ -28,6 +36,8 @@ function cargarEquiposExistentes() {
  */
 
 const URLAPI = "http://localhost:3000/provincias";
+let provinciaId = '';
+let localidadId = '';
 
 function obtenerProvincias() {
   const provSelect = $("#provincia");
@@ -77,10 +87,15 @@ TODO const URLAPI = "https://apis.datos.gob.ar/georef/api/provincias";
 //     }
 //   });
 // }
+
 $("#provincia").change((event) => {
-  const idProvincia = event.target.value;
-  const URLAPIMUNI = `http://localhost:3000/municipios/${idProvincia}`;
+  this.provinciaId = event.target.value;
+  const URLAPIMUNI = `http://localhost:3000/municipios/${this.provinciaId}`;
   cargarMinicipio(URLAPIMUNI);
+});
+
+$("#localidad").change((event) => {
+  this.localidadId = event.target.value;
 });
 
 function cargarMinicipio(URLAPIMUNI) {
@@ -104,20 +119,37 @@ function cargarMinicipio(URLAPIMUNI) {
  */
 function agregarEquipo() {
   const newEquipo = new Equipo();
-  let indexProv = document.formEquipo.provincia.selectedIndex;
-  let indexLoc = document.formEquipo.localidad.selectedIndex;
+  const indexProv = document.formEquipo.provincia.selectedIndex;
+  const indexLoc = document.formEquipo.localidad.selectedIndex;
+  const nombreProv = document.formEquipo.provincia.options[indexProv].text;
+  const nombreLoc = document.formEquipo.localidad.options[indexLoc].text;
+
 
   newEquipo.nombreEquipo = formulario.nombre.value;
-  newEquipo.provinciaEquipo = formulario.provincia.options[indexProv].text;
-  newEquipo.localidadEquipo = formulario.localidad.options[indexLoc].text;
+  newEquipo.localidadId = this.localidadId;
+  newEquipo.provinciaId = this.localidadId;
+  newEquipo.provinciaEquipo = nombreProv;
+  newEquipo.localidadEquipo = nombreLoc;
 
   equipos.push(newEquipo);
-  const storageEquipos = JSON.parse(localStorage.getItem("equipos")) || [];
-  const todosEquipos = [...storageEquipos, newEquipo];
+
+  this.postData("http://localhost:3000/equipos", newEquipo)
+    .done(function (resp) {
+      console.log(resp)
+    });
 
   agregarFila(newEquipo); //AGREGAR UNA FILA EN LA TABLA
 
-  localStorage.setItem("equipos", JSON.stringify(todosEquipos));
+}
+
+function postData(url = "", data = {}) {
+  return $.ajax({
+    url,
+    type: "POST",
+    data: JSON.stringify(data),
+    dataType: "json",
+    contentType: "application/json"
+  })
 }
 
 /*
@@ -226,5 +258,5 @@ formulario.addEventListener("submit", (evento) => {
   }
 });
 
-// cargarEquiposExistentes();
+cargarEquiposExistentes();
 obtenerProvincias();
