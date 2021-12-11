@@ -2,3 +2,6 @@
 document.getElementById(`equipo__${idForm}`).classList.remove("alert__invalido");
 document.getElementById(`error__${idForm}`).classList.add("alert__valido");
 document.getElementById(`error__${idForm}`).classList.add("alert__invalido");
+
+
+****** DATA
