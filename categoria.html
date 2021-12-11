@@ -87,13 +87,12 @@
                                 Se debe agregar una rango de edad valida (no letras)
                             </strong>
                         </div>
-                        <div class="col-6" id="categoria__descripcion" name="categoria__descripcion">
-                            <label class="form-label">Descripcion</label>
-                            <input type="text" class="form-control" autocomplete="off" id="descripcion"
-                                name="descripcion" placeholder="Descripcion">
-                            <strong class="error__formulario">
-                                Se debe agregar una descripcion valida
-                            </strong>
+                        <div class="col-md-6" id="categoria__genero" name="categoria__genero">
+                            <label class="form-label">Genero</label>
+                            <select class="form-select" id="genero" name="localidad">
+                                <option value="0" selected>Hombre</option>
+                                <option value="1">Mujer</option>
+                            </select>
                         </div>
                         <button class="btn btn-enviar" type="submit"> Guardar Categoria</button>
                     </form>
@@ -109,7 +108,7 @@
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Edad Minima</th>
                                 <th scope="col">Edad Maxima</th>
-                                <th scope="col">Descripcion</th>
+                                <th scope="col">Genero</th>
                             </tr>
                         </thead>
                         <tbody id="tablaCategorias">

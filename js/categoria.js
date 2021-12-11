@@ -1,28 +1,52 @@
 class Categoria {
-  constructor(nombreCategoria, rangoEdadMinima, rangoEdadMaxima, descripcion) {
+  constructor(nombreCategoria, rangoEdadMinima, rangoEdadMaxima, genero) {
     this.nombreCategoria = nombreCategoria;
     this.rangoEdadMinima = rangoEdadMinima;
     this.rangoEdadMaxima = rangoEdadMaxima;
-    this.descripcion = descripcion;
+    this.genero = genero;
   }
 }
 
 function agregarCategoria() {
   const newCategoria = new Categoria();
+  const indexGenero = document.formCategoria.genero.selectedIndex;
+  const nombreGenero = document.formCategoria.genero.options[indexGenero].text;
+
   newCategoria.nombreCategoria = formulario.nombre.value;
   newCategoria.rangoEdadMinima = formulario.rangoMinimo.value;
   newCategoria.rangoEdadMaxima = formulario.rangoMaximo.value;
-  newCategoria.descripcion = formulario.descripcion.value;
+  newCategoria.genero = nombreGenero;
 
   categorias.push(newCategoria);
-
-  const storageCtegoria = JSON.parse(localStorage.getItem("categorias")) || [];
-  const todosCategorias = [...storageCtegoria, newCategoria];
-
-  agregarFila(newCategoria);
-  localStorage.setItem("categorias", JSON.stringify(todosCategorias));
+  this.postData("http://localhost:3000/categorias", newCategoria)
+    .done(function (resp) {
+      console.log(resp)
+    });
+  agregarFila(newCategoria); //AGREGAR UNA FILA EN LA TABLA
 }
 
+function postData(url = "", data = {}) {
+  return $.ajax({
+    url,
+    type: "POST",
+    data: JSON.stringify(data),
+    dataType: "json",
+    contentType: "application/json"
+  })
+}
+
+
+function cargarCategoriasExistentes() {
+  $.getJSON(`http://localhost:3000/categorias`, function (response, estado) {
+    if (estado === "success") {
+      console.log(response);
+      const categorias = response;
+      for (const cat of categorias) {
+        agregarFila(cat);
+      }
+    }
+  })
+}
 /*
  *INSERTAR UN NUEVO REGISTO DE CATEGORIA EN EL HTML
  */
@@ -32,30 +56,22 @@ function agregarFila(categoria) {
   <td>${categoria.nombreCategoria}</td>
   <td>${categoria.rangoEdadMinima}</td>
   <td>${categoria.rangoEdadMaxima}</td>
-  <td>${categoria.descripcion}</td>
+  <td>${categoria.genero}</td>
   </tr>
   `);
 }
-function cargarCategiriasExistentes() {
-  let categoriascargadas = JSON.parse(localStorage.getItem("categorias"));
-  if (categoriascargadas != null && categoriascargadas.length != 0) {
-    for (const eqp of categoriascargadas) {
-      agregarFila(eqp);
-    }
-  } else {
-    categoriascargadas = [];
-  }
-}
 /*
- *DECLARACION DE ELEMENTOS A UTILIZAR
+ ?DECLARACION DE ELEMENTOS A UTILIZAR
  */
+const categorias = [];
 const expresionCadena = {
   cadena: /^[a-zA-Z0-9/ /ñ]{2,20}$/,
   numero: /^[0-9]{1,2}$/,
 };
-const categorias = [];
 
-// acceso para la validacion de input del formulario
+/*
+TODO acceso para la validacion de input del formulario 
+*/
 const categoriaValido = {
   nombre: false,
   rangoMinimo: false,
@@ -111,8 +127,7 @@ inputs.forEach((input) => {
  */
 formulario.addEventListener("submit", (evento) => {
   evento.preventDefault();
-  if (
-    categoriaValido.nombre &&
+  if (categoriaValido.nombre &&
     categoriaValido.rangoMaximo &&
     categoriaValido.rangoMaximo
   ) {
@@ -121,4 +136,4 @@ formulario.addEventListener("submit", (evento) => {
   }
 });
 
-cargarCategiriasExistentes();
+cargarCategoriasExistentes();

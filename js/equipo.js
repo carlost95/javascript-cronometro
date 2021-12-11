@@ -1,5 +1,5 @@
 /*
- *Declaracion de clases
+ TODO Declaracion de clases
  */
 class Equipo {
   constructor(nombreEquipo, localidadEquipo, provinciaEquipo) {
@@ -21,14 +21,6 @@ function cargarEquiposExistentes() {
       }
     }
   })
-  // let equiposCargados = JSON.parse(localStorage.getItem("equipos"));
-  // if (equiposCargados != null && equiposCargados.length != 0) {
-  //   for (const eqp of equiposCargados) {
-  //     agregarFila(eqp);
-  //   }
-  // } else {
-  //   equiposCargados = [];
-  // }
 }
 
 /*
@@ -50,42 +42,6 @@ function obtenerProvincias() {
     }
   });
 }
-/*
-TODO const URLAPI = "https://apis.datos.gob.ar/georef/api/provincias";
-?function obtenerProvincias() {
- ? const provSelect = $("#provincia");
-  ?$.getJSON(URLAPI, function (response, estado) {
-   ? if (estado == "success") {
-    ?  const provincias = response.provincias;
-     ? for (const items of provincias) {
-      ?  provSelect.append(`<option value=${items.id}>${items.nombre}</option>`);
-      ?}
-    ?}
-  ?});
-?}
-*/
-/*
- *Funcion carga de municipios  al select localidad
- */
-// $("#provincia").change((event) => {
-//   const idProvincia = event.target.value;
-//   const URLAPIMUNI = `https://apis.datos.gob.ar/georef/api/municipios?provincia=${idProvincia}&campos=id,nombre&max=100`;
-//   cargarMinicipio(URLAPIMUNI);
-// });
-
-// function cargarMinicipio(URLAPIMUNI) {
-//   const munSelect = $("#localidad");
-//   $("#localidad").html("");
-//   $.getJSON(URLAPIMUNI, function (response, estado) {
-//     if (estado === "success") {
-//       const localidades = response.municipios;
-//       munSelect.append(`<option value=${0}>Localidad</option>`);
-//       for (const local of localidades) {
-//         munSelect.append(`<option value=${local.id}>${local.nombre}</option>`);
-//       }
-//     }
-//   });
-// }
 
 $("#provincia").change((event) => {
   this.provinciaId = event.target.value;
@@ -124,7 +80,7 @@ function agregarEquipo() {
 
   newEquipo.nombreEquipo = formulario.nombre.value;
   newEquipo.localidadId = this.localidadId;
-  newEquipo.provinciaId = this.provinciaId;
+  newEquipo.provinciaId = this.localidadId;
   newEquipo.provinciaEquipo = nombreProv;
   newEquipo.localidadEquipo = nombreLoc;
 
