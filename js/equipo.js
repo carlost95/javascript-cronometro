@@ -42,7 +42,6 @@ let localidadId = '';
 function obtenerProvincias() {
   const provSelect = $("#provincia");
   $.getJSON(URLAPI, function (response, estado) {
-    console.warn(response);
     if (estado === "success") {
       const provincias = response;
       for (const items of provincias) {
@@ -102,8 +101,6 @@ function cargarMinicipio(URLAPIMUNI) {
   const munSelect = $("#localidad");
   $("#localidad").html("");
   $.get(URLAPIMUNI, function (response, estado) {
-    console.warn("respuesta");
-    console.log(response, estado);
     if (estado === "success") {
       const localidades = response;
       munSelect.append(`<option value=${0}>Localidad</option>`);
@@ -127,7 +124,7 @@ function agregarEquipo() {
 
   newEquipo.nombreEquipo = formulario.nombre.value;
   newEquipo.localidadId = this.localidadId;
-  newEquipo.provinciaId = this.localidadId;
+  newEquipo.provinciaId = this.provinciaId;
   newEquipo.provinciaEquipo = nombreProv;
   newEquipo.localidadEquipo = nombreLoc;
 
