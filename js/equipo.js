@@ -8,25 +8,14 @@ class Equipo {
     this.provinciaEquipo = provinciaEquipo;
   }
 }
+
 /*
- *METODO DE ORDENAMIENTO SORT
- */
-// function pruebaEquipoSort() {
-//   let equipo1 = new Equipo("Espectro", "Chilecito", "La Rioja");
-//   equipos.push(equipo1);
-//   let equipo2 = new Equipo("Trotas", "Chilecito", "La Rioja");
-//   equipos.push(equipo2);
-//   let equipo3 = new Equipo("Agilas", "Chilecito", "La Rioja");
-//   equipos.push(equipo3);
-// }
-/*
- *CARGAR EQUIPOS EXISTENTES EN LOCAL STORAGE
+ !CARGAR EQUIPOS EXISTENTES EN LOCAL STORAGE
  */
 function cargarEquiposExistentes() {
   let equiposCargados = JSON.parse(localStorage.getItem("equipos"));
   if (equiposCargados != null && equiposCargados.length != 0) {
-    for (const eqp in equiposCargados) {
-      console.log("equipo-->" + eqp);
+    for (const eqp of equiposCargados) {
       agregarFila(eqp);
     }
   } else {
@@ -35,15 +24,17 @@ function cargarEquiposExistentes() {
 }
 
 /*
- * consultas API REST de Provincias y localidades
+ ? consultas API REST de Provincias y localidades
  */
-const URLAPI = "https://apis.datos.gob.ar/georef/api/provincias";
+
+const URLAPI = "http://localhost:3000/provincias";
 
 function obtenerProvincias() {
   const provSelect = $("#provincia");
   $.getJSON(URLAPI, function (response, estado) {
+    console.warn(response);
     if (estado === "success") {
-      const provincias = response.provincias;
+      const provincias = response;
       for (const items of provincias) {
         provSelect.append(`<option value=${items.id}>${items.nombre}</option>`);
       }
@@ -51,20 +42,55 @@ function obtenerProvincias() {
   });
 }
 /*
+TODO const URLAPI = "https://apis.datos.gob.ar/georef/api/provincias";
+?function obtenerProvincias() {
+ ? const provSelect = $("#provincia");
+  ?$.getJSON(URLAPI, function (response, estado) {
+   ? if (estado == "success") {
+    ?  const provincias = response.provincias;
+     ? for (const items of provincias) {
+      ?  provSelect.append(`<option value=${items.id}>${items.nombre}</option>`);
+      ?}
+    ?}
+  ?});
+?}
+*/
+/*
  *Funcion carga de municipios  al select localidad
  */
+// $("#provincia").change((event) => {
+//   const idProvincia = event.target.value;
+//   const URLAPIMUNI = `https://apis.datos.gob.ar/georef/api/municipios?provincia=${idProvincia}&campos=id,nombre&max=100`;
+//   cargarMinicipio(URLAPIMUNI);
+// });
+
+// function cargarMinicipio(URLAPIMUNI) {
+//   const munSelect = $("#localidad");
+//   $("#localidad").html("");
+//   $.getJSON(URLAPIMUNI, function (response, estado) {
+//     if (estado === "success") {
+//       const localidades = response.municipios;
+//       munSelect.append(`<option value=${0}>Localidad</option>`);
+//       for (const local of localidades) {
+//         munSelect.append(`<option value=${local.id}>${local.nombre}</option>`);
+//       }
+//     }
+//   });
+// }
 $("#provincia").change((event) => {
   const idProvincia = event.target.value;
-  const URLAPIMUNI = `https://apis.datos.gob.ar/georef/api/municipios?provincia=${idProvincia}&campos=id,nombre&max=100`;
+  const URLAPIMUNI = `http://localhost:3000/municipios/${idProvincia}`;
   cargarMinicipio(URLAPIMUNI);
 });
 
 function cargarMinicipio(URLAPIMUNI) {
   const munSelect = $("#localidad");
   $("#localidad").html("");
-  $.getJSON(URLAPIMUNI, function (response, estado) {
+  $.get(URLAPIMUNI, function (response, estado) {
+    console.warn("respuesta");
+    console.log(response, estado);
     if (estado === "success") {
-      const localidades = response.municipios;
+      const localidades = response;
       munSelect.append(`<option value=${0}>Localidad</option>`);
       for (const local of localidades) {
         munSelect.append(`<option value=${local.id}>${local.nombre}</option>`);
@@ -200,5 +226,5 @@ formulario.addEventListener("submit", (evento) => {
   }
 });
 
-cargarEquiposExistentes();
+// cargarEquiposExistentes();
 obtenerProvincias();

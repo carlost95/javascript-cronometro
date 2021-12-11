@@ -9,19 +9,14 @@ body {
   top: 0px;
   bottom: 0px;
   background-color: rgba(248, 248, 247, 0.555);
+  min-height: 100vh;
+  padding-bottom: 90px;
 }
 
 .navbar-container__gradiente {
   /* GRADIENTE */
   background: #240b36;
-  background: linear-gradient(
-    90deg,
-    #000000 8%,
-    #969696 25%,
-    #e7e7e7 45%,
-    #ff0066 65%,
-    #b30059 85%
-  );
+  background: linear-gradient(90deg, #000000 8%, #969696 25%, #e7e7e7 45%, #ff0066 65%, #b30059 85%);
 }
 
 .logo {
@@ -56,7 +51,7 @@ body {
 .main {
   margin-top: 90px;
   padding: 20px;
-  height: 85vh;
+  height: 100%;
 }
 
 .section__titulo {
@@ -91,7 +86,10 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: absolute;
+  bottom: 0;
   height: 80px;
+  width: 100%;
 }
 
 .footer__autor {

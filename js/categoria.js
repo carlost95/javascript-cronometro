@@ -5,10 +5,6 @@ class Categoria {
     this.rangoEdadMaxima = rangoEdadMaxima;
     this.descripcion = descripcion;
   }
-  mostrarDatos() {
-    console.warn("CARGA DE CATEGORIA");
-    console.log(this.nombreCategoria);
-  }
 }
 
 function agregarCategoria() {
@@ -17,11 +13,14 @@ function agregarCategoria() {
   newCategoria.rangoEdadMinima = formulario.rangoMinimo.value;
   newCategoria.rangoEdadMaxima = formulario.rangoMaximo.value;
   newCategoria.descripcion = formulario.descripcion.value;
-  let newCat = [];
-  newCat = categorias.concat(newCategoria);
-  localStorage.setItem("categorias", JSON.stringify(newCat));
-  newCategoria.mostrarDatos();
+
+  categorias.push(newCategoria);
+
+  const storageCtegoria = JSON.parse(localStorage.getItem("categorias")) || [];
+  const todosCategorias = [...storageCtegoria, newCategoria];
+
   agregarFila(newCategoria);
+  localStorage.setItem("categorias", JSON.stringify(todosCategorias));
 }
 
 /*
@@ -36,6 +35,16 @@ function agregarFila(categoria) {
   <td>${categoria.descripcion}</td>
   </tr>
   `);
+}
+function cargarCategiriasExistentes() {
+  let categoriascargadas = JSON.parse(localStorage.getItem("categorias"));
+  if (categoriascargadas != null && categoriascargadas.length != 0) {
+    for (const eqp of categoriascargadas) {
+      agregarFila(eqp);
+    }
+  } else {
+    categoriascargadas = [];
+  }
 }
 /*
  *DECLARACION DE ELEMENTOS A UTILIZAR
@@ -111,3 +120,5 @@ formulario.addEventListener("submit", (evento) => {
     formulario.reset();
   }
 });
+
+cargarCategiriasExistentes();
