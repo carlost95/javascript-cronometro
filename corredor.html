@@ -55,64 +55,66 @@
             </div>
         </header>
         <main class="main">
-            <section class="main__section section">
-                <div class="container">
-                    <h1 class="section__titulo section__titulo--variante">Carga de corredor</h1>
-                    <hr class="section__hr section__hr--titulo">
-                </div>
-                <form name="formCorredor" id="formCorredor" class="row g-3">
-                    <div class="col-md-6" id="corredor__nombre">
-                        <label class="form-label">Nombre de Corredor</label>
-                        <input type="text" class="form-control" autocomplete="off" id="nombre" name="nombre"
-                            placeholder="Nombre" required>
-                        <strong class="error__formulario">
-                            Se debe agregar un nombre valida
-                        </strong>
+            <div class="container">
+                <section class="main__section section">
+                    <div class="container">
+                        <h1 class="section__titulo section__titulo--variante">Carga de corredor</h1>
+                        <hr class="section__hr section__hr--titulo">
                     </div>
+                    <form name="formCorredor" id="formCorredor" class="row g-3">
+                        <div class="col-md-6" id="corredor__nombre">
+                            <label class="form-label">Nombre de Corredor</label>
+                            <input type="text" class="form-control" autocomplete="off" id="nombre" name="nombre"
+                                placeholder="Nombre" required>
+                            <strong class="error__formulario">
+                                Se debe agregar un nombre valida
+                            </strong>
+                        </div>
 
-                    <div class="col-md-6" id="corredor__edad">
-                        <label class="form-label">Edad</label>
-                        <input type="text" class="form-control" autocomplete="off" id="edad" name="edad"
-                            placeholder="Edad Corredor" required>
-                        <strong class="error__formulario">
-                            Se debe agregar una edad valida
-                        </strong>
-                    </div>
-                    <div class="col-md-6" id="corredor__dni">
-                        <label class="form-label">Dni</label>
-                        <input type="text" class="form-control" autocomplete="off" id="dni" name="dni"
-                            placeholder="Dni corredor" required>
-                        <strong class="error__formulario">
-                            Se debe agregar un dni valida
-                        </strong>
-                    </div>
-                    <div class="col-md-6" id="corredor__dorsal">
-                        <label class="form-label">Nro Dorsal</label>
-                        <input type="number" class="form-control" autocomplete="on" id="dorsal" name="dorsal"
-                            placeholder="Nro dorsal" required>
-                        <strong class="error__formulario">
-                            Se debe agregar un dorsal valida / solo numeros
-                        </strong>
-                    </div>
+                        <div class="col-md-6" id="corredor__edad">
+                            <label class="form-label">Edad</label>
+                            <input type="text" class="form-control" autocomplete="off" id="edad" name="edad"
+                                placeholder="Edad Corredor" required>
+                            <strong class="error__formulario">
+                                Se debe agregar una edad valida
+                            </strong>
+                        </div>
+                        <div class="col-md-6" id="corredor__dni">
+                            <label class="form-label">Dni</label>
+                            <input type="text" class="form-control" autocomplete="off" id="dni" name="dni"
+                                placeholder="Dni corredor" required>
+                            <strong class="error__formulario">
+                                Se debe agregar un dni valida
+                            </strong>
+                        </div>
+                        <div class="col-md-6" id="corredor__dorsal">
+                            <label class="form-label">Nro Dorsal</label>
+                            <input type="number" class="form-control" autocomplete="on" id="dorsal" name="dorsal"
+                                placeholder="Nro dorsal" required>
+                            <strong class="error__formulario">
+                                Se debe agregar un dorsal valida / solo numeros
+                            </strong>
+                        </div>
 
-                    <div class="col-md-6" id="corredor__categoria">
-                        <label class="form-label">Categoria</label>
-                        <select class="form-select" id="categoria" name="categoria">
-                            <option value="" selected>Categoria</option>
-                        </select>
-                        <strong class="error__formulario">
-                            Se debe agregar una categoria valida
-                        </strong>
-                    </div>
-                    <div class="col-6" id=corredor__equipo">
-                        <label class="form-label">Equipo</label>
-                        <select class="form-select" id="equipo">
-                            <option value="">Sin Equipo</option>
-                        </select>
-                    </div>
-                    <button class="btn btn-enviar" type="submit"> Guardar Nuevo Corredor</button>
-                </form>
-            </section>
+                        <div class="col-md-6" id="corredor__categoria">
+                            <label class="form-label">Categoria</label>
+                            <select class="form-select" id="categoria" name="categoria">
+                                <option value="" selected>Categoria</option>
+                            </select>
+                            <strong class="error__formulario">
+                                Se debe agregar una categoria valida
+                            </strong>
+                        </div>
+                        <div class="col-6" id=corredor__equipo">
+                            <label class="form-label">Equipo</label>
+                            <select class="form-select" id="equipo">
+                                <option value="">Sin Equipo</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-enviar" type="submit"> Guardar Nuevo Corredor</button>
+                    </form>
+                </section>
+            </div>
             <section class="main__section section mt-3">
                 <div class="container">
                     <h2 class="section__titulo section__titulo--variante">Lista de Equipos</h2>

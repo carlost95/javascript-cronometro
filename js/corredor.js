@@ -44,7 +44,6 @@ function cargarEquipo() {
 function cargarCorredoresExistentes() {
   $.getJSON(URLCORREDOR, function (response, estado) {
     if (estado === "success") {
-      console.warn(response, "corredores");
       const corredores = response;
       for (const corredor of corredores) {
         agregarFila(corredor);
@@ -54,7 +53,7 @@ function cargarCorredoresExistentes() {
 }
 
 /*
- *Funcion CREAR corredor
+ TODO Funcion CREAR corredor
  */
 function agregarCorredor() {
   const newCorredor = new Corredor();
@@ -91,7 +90,7 @@ function postData(url = "", data = {}) {
 }
 
 /*
- *INSERTAR UN NUEVO REGISTO DE EQUIPO EN EL HTML
+ TODO INSERTAR UN NUEVO REGISTO DE EQUIPO EN EL HTML
  */
 function agregarFila(corredor) {
   const tablaEquipos = $("#tablaCorredor");
@@ -200,7 +199,7 @@ selections.forEach((select) => {
   select.addEventListener("keyup", validarInputFormularioCorredor);
 });
 /*
- *AGREGADO DE EVENTLISTENER
+ ?AGREGADO DE EVENTLISTENER
  */
 formulario.addEventListener("submit", (evento) => {
   evento.preventDefault();
