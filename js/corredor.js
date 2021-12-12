@@ -15,7 +15,8 @@ TODO cargas desde las entidades categorias y equipos
 const URLCATEGORIA = "http://localhost:3000/categorias";
 const URLEQUIPO = "http://localhost:3000/equipos";
 const URLCORREDOR = "http://localhost:3000/corredores";
-
+let categoriaId = '';
+let equipoId = '';
 
 function cargarCategoria() {
   const categoriaSelected = $("#categoria");
@@ -23,7 +24,7 @@ function cargarCategoria() {
     if (estado === "success") {
       const categorias = response;
       for (const cat of categorias) {
-        categoriaSelected.append(`<option>${cat.nombreCategoria}-${cat.genero}</option>`);
+        categoriaSelected.append(`<option value=${cat.id}>${cat.nombreCategoria}-${cat.genero}</option>`);
       }
     }
   });
@@ -35,7 +36,7 @@ function cargarEquipo() {
     if (estado === "success") {
       const equipos = response;
       for (const equipo of equipos) {
-        equipoSelected.append(`<option>${equipo.nombreEquipo}</option>`);
+        equipoSelected.append(`<option value=${equipo.id}>${equipo.nombreEquipo}</option>`);
       }
     }
   });
@@ -68,6 +69,8 @@ function agregarCorredor() {
   newCorredor.dorsalCorredor = formulario.dorsal.value;
   newCorredor.categoriaCorredor = categoriaCorredor;
   newCorredor.equipoCorredor = equipoCorredor;
+  newCorredor.equipoId = this.equipoId;
+  newCorredor.categoriaId = this.categoriaId;
 
   corredores.push(newCorredor);
 
@@ -210,6 +213,15 @@ formulario.addEventListener("submit", (evento) => {
     agregarCorredor();
     formulario.reset();
   }
+});
+
+
+$("#categoria").change((event) => {
+  this.categoriaId = event.target.value;
+});
+
+$("#equipo").change((event) => {
+  this.equipoId= event.target.value;
 });
 
 cargarCorredoresExistentes();
