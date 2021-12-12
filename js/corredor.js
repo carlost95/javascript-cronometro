@@ -12,46 +12,82 @@ class Corredor {
 ?Obtencion de los archivos locales
 TODO cargas desde las entidades categorias y equipos
 */
-equipos = JSON.parse(localStorage.getItem("equipos"));
-categorias = JSON.parse(localStorage.getItem("categorias"));
+const URLCATEGORIA = "http://localhost:3000/categorias";
+const URLEQUIPO = "http://localhost:3000/equipos";
+const URLCORREDOR = "http://localhost:3000/corredores";
+
 
 function cargarCategoria() {
   const categoriaSelected = $("#categoria");
-  for (const categoria of categorias) {
-    categoriaSelected.append(`<option>${categoria.nombreCategoria}</option>`);
-  }
+  $.getJSON(URLCATEGORIA, function (response, estado) {
+    if (estado === "success") {
+      const categorias = response;
+      for (const cat of categorias) {
+        categoriaSelected.append(`<option>${cat.nombreCategoria}-${cat.genero}</option>`);
+      }
+    }
+  });
 }
 
 function cargarEquipo() {
   const equipoSelected = $("#equipo");
-  for (const equipo of equipos) {
-    equipoSelected.append(`<option>${equipo.nombreEquipo}</option>`);
-  }
+  $.getJSON(URLEQUIPO, function (response, estado) {
+    if (estado === "success") {
+      const equipos = response;
+      for (const equipo of equipos) {
+        equipoSelected.append(`<option>${equipo.nombreEquipo}</option>`);
+      }
+    }
+  });
 }
+
+function cargarCorredoresExistentes() {
+  $.getJSON(URLCORREDOR, function (response, estado) {
+    if (estado === "success") {
+      console.warn(response, "corredores");
+      const corredores = response;
+      for (const corredor of corredores) {
+        agregarFila(corredor);
+      }
+    }
+  })
+}
+
 /*
  *Funcion CREAR corredor
  */
 function agregarCorredor() {
   const newCorredor = new Corredor();
-
-  let indexProv = document.formCorredor.categoria.selectedIndex;
-  let indexLoc = document.formCorredor.equipo.selectedIndex;
+  const indexProv = document.formCorredor.categoria.selectedIndex;
+  const indexLoc = document.formCorredor.equipo.selectedIndex;
+  const categoriaCorredor = formulario.categoria.options[indexProv].text;
+  const equipoCorredor = formulario.equipo.options[indexLoc].text;
 
   newCorredor.nombreCorredor = formulario.nombre.value;
   newCorredor.edadCorredor = formulario.edad.value;
   newCorredor.dniCorredor = formulario.dni.value;
   newCorredor.dorsalCorredor = formulario.dorsal.value;
-
-  newCorredor.categoriaCorredor = formulario.categoria.options[indexProv].text;
-  newCorredor.equipoCorredor = formulario.equipo.options[indexLoc].text;
+  newCorredor.categoriaCorredor = categoriaCorredor;
+  newCorredor.equipoCorredor = equipoCorredor;
 
   corredores.push(newCorredor);
-  const storageCorredores = JSON.parse(localStorage.getItem("corredores")) || [];
-  const todosCorredores = [...storageCorredores, newCorredor];
 
-  agregarFila(newCorredor); //AGREGAR UNA FILA EN LA TABLA
+  this.postData(URLCORREDOR, newCorredor)
+    .done(function (resp) {
+      console.log(resp)
+    });
 
-  localStorage.setItem("corredores", JSON.stringify(todosCorredores));
+  agregarFila(newCorredor);
+}
+
+function postData(url = "", data = {}) {
+  return $.ajax({
+    url,
+    type: "POST",
+    data: JSON.stringify(data),
+    dataType: "json",
+    contentType: "application/json"
+  })
 }
 
 /*
@@ -70,16 +106,7 @@ function agregarFila(corredor) {
   `);
 }
 
-function cargarCorredoresExistentes() {
-  let corredoresCargados = JSON.parse(localStorage.getItem("corredores"));
-  if (corredoresCargados != null && corredoresCargados.length != 0) {
-    for (const corredor of corredoresCargados) {
-      agregarFila(corredor);
-    }
-  } else {
-    corredoresCargados = [];
-  }
-}
+
 
 /* 
  ?DECLARACION DE ELEMENTOS A UTILIZAR
@@ -106,8 +133,6 @@ const corredorValido = {
  ?VALIDACION DE SELECT EN LOS FORMULARIOS CON FUNCIONES
  */
 const validarInputFormSelect = (idForm) => {
-  console.warn(idForm, "formulario select");
-
   let provForm = document.forms["formCorredor"][idForm].selectedIndex;
   if (provForm != 0) {
     document
