@@ -39,7 +39,6 @@ function postData(url = "", data = {}) {
 function cargarCategoriasExistentes() {
   $.getJSON(`http://localhost:3000/categorias`, function (response, estado) {
     if (estado === "success") {
-      console.log(response);
       const categorias = response;
       for (const cat of categorias) {
         agregarFila(cat);

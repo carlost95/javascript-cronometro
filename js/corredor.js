@@ -114,7 +114,7 @@ function agregarFila(corredor) {
  ?DECLARACION DE ELEMENTOS A UTILIZAR
 */
 const expresionCadena = {
-  cadena: /^[a-zA-Z0-9/ /ñ]{2,20}$/,
+  cadena: /^[a-zA-Z0-9/ /ñ]{2,40}$/,
   dni: /^[0-9]{7,8}$/,
   numero: /^[0-9]{1,4}$/,
 };
@@ -221,7 +221,7 @@ $("#categoria").change((event) => {
 });
 
 $("#equipo").change((event) => {
-  this.equipoId= event.target.value;
+  this.equipoId = event.target.value;
 });
 
 cargarCorredoresExistentes();

@@ -4,7 +4,7 @@
 const timer = new Timer();
 const URL_EVENT = `http://localhost:3000/eventos`;
 const URL_POSICIONES = "http://localhost:3000/posiciones"
-const URL_CATEGORIAS= "http://localhost:3000/categorias"
+const URL_CATEGORIAS = "http://localhost:3000/categorias"
 
 $("#chronoExample .startButton").click(function () {
   try {
@@ -35,7 +35,6 @@ $("#chronoExample .resetButton").click(function () {
   timer.start({
     precision: "secondTenths"
   });
-  // timer.pause({ precision: "secondTenths" });
 });
 
 timer.addEventListener("secondTenthsUpdated", function (e) {
@@ -131,11 +130,12 @@ function crearTablasCategorias() {
       data.forEach(categoria => {
         tablaCategoria.append(`
           <div class="container mt-4">
-            <h2 class="section__titulo section__titulo--variante">Posiciones categoria ${categoria.nombreCategoria} - ${categoria.genero}</h2>
+            <h2 class="section__titulo section__titulo--variante-categorias">Posiciones categoria ${categoria.nombreCategoria} - ${categoria.genero}</h2>
             <hr class="section__hr section__hr--titulo">
             <table class="table table-danger table-hover table-striped">
             <thead>
               <tr>
+              <th scope="col">Posicion</th>
                 <th scope="col">Nombre</th>
                 <th scope="col">Dorsal</th>
                 <th scope="col">Tiempo</th>
