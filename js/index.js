@@ -3,13 +3,13 @@
  */
 const timer = new Timer();
 const URL_EVENT = `http://localhost:3000/eventos`;
-const URL_POSICIONES = "http://localhost:3000/posiciones"
-const URL_CATEGORIAS = "http://localhost:3000/categorias"
+const URL_POSICIONES = "http://localhost:3000/posiciones";
+const URL_CATEGORIAS = "http://localhost:3000/categorias";
 
 $("#chronoExample .startButton").click(function () {
   try {
     timer.start({
-      precision: "secondTenths"
+      precision: "secondTenths",
     });
   } catch (e) {
     console.log("error tonto" + timer.getTimeValues());
@@ -18,30 +18,30 @@ $("#chronoExample .startButton").click(function () {
 
 $("#chronoExample .pauseButton").click(function () {
   timer.pause({
-    precision: "secondTenths"
+    precision: "secondTenths",
   });
 });
 
 $("#chronoExample .stopButton").click(function () {
   timer.stop({
-    precision: "secondTenths"
+    precision: "secondTenths",
   });
 });
 
 $("#chronoExample .resetButton").click(function () {
   timer.stop({
-    precision: "secondTenths"
+    precision: "secondTenths",
   });
   timer.start({
-    precision: "secondTenths"
+    precision: "secondTenths",
   });
 });
 
 timer.addEventListener("secondTenthsUpdated", function (e) {
   $("#chronoExample .values").html(
     timer
-    .getTimeValues()
-    .toString(["hours", "minutes", "seconds", "secondTenths"])
+      .getTimeValues()
+      .toString(["hours", "minutes", "seconds", "secondTenths"])
   );
 });
 
@@ -51,32 +51,32 @@ const postData = (url = "", data = {}) => {
     type: "POST",
     data: JSON.stringify(data),
     dataType: "json",
-    contentType: "application/json"
-  })
-}
+    contentType: "application/json",
+  });
+};
 
 const dorsal = $("#numero").keypress(function (evento) {
   const dorsalVal = dorsal.val();
   if (evento.keyCode == 13 && dorsalVal.length > 0) {
-    const time = timer.getTimeValues().toString(["hours", "minutes", "seconds", "secondTenths"]);
+    const time = timer
+      .getTimeValues()
+      .toString(["hours", "minutes", "seconds", "secondTenths"]);
     const data = {
       dorsal: dorsalVal,
-      time
-    }
-    postData(URL_EVENT, data)
-      .done(function (resp) {
-        cargarPosicionesMujer();
-        cargarPosicionesHombres();
-        crearTablasCategorias();
-        dorsal.val("");
-      });
-
+      time,
+    };
+    postData(URL_EVENT, data).done(function (resp) {
+      cargarPosicionesMujer();
+      cargarPosicionesHombres();
+      crearTablasCategorias();
+      dorsal.val("");
+    });
   }
 });
 
-
 function agregarFila(evento, tabla) {
-  tabla.fadeIn(3000).append(`<tr>
+  tabla.fadeIn(3000).append(`<tr> 
+  <th>${evento.position}</th>
   <td>${evento.nombreCorredor}</td>
   <td>${evento.dorsalCorredor}</td>
   <td>${evento.time}</td>
@@ -87,10 +87,10 @@ function agregarFila(evento, tabla) {
 }
 
 function cargarPosicionesHombres() {
-  $.get(URL_POSICIONES + '/Hombre', function (response, estado) {
+  $.get(URL_POSICIONES + "/VARONES", function (response, estado) {
     if (estado === "success") {
       const data = response;
-      const tablaData = $("#tablaGeneralHombre").empty();
+      const tablaData = $("#tablaGeneralVarones").empty();
       for (const dt of data) {
         agregarFila(dt, tablaData);
       }
@@ -99,10 +99,10 @@ function cargarPosicionesHombres() {
 }
 
 function cargarPosicionesMujer() {
-  $.get(URL_POSICIONES + '/Mujer', function (response, estado) {
+  $.get(URL_POSICIONES + "/DAMAS", function (response, estado) {
     if (estado === "success") {
       const data = response;
-      const tablaData = $("#tablaGeneralMujer").empty();
+      const tablaData = $("#tablaGeneralDamas").empty();
       for (const dt of data) {
         agregarFila(dt, tablaData);
       }
@@ -111,15 +111,18 @@ function cargarPosicionesMujer() {
 }
 
 function cargarPorCategoria(categoriaId) {
-  $.get(URL_POSICIONES + '/categoria/' + categoriaId, function (response, estado) {
-    if (estado === "success") {
-      const data = response;
-      const tablaData = $(`#${categoriaId}`).empty();
-      for (const dt of data) {
-        agregarFila(dt, tablaData);
+  $.get(
+    URL_POSICIONES + "/categoria/" + categoriaId,
+    function (response, estado) {
+      if (estado === "success") {
+        const data = response;
+        const tablaData = $(`#${categoriaId}`).empty();
+        for (const dt of data) {
+          agregarFila(dt, tablaData);
+        }
       }
     }
-  });
+  );
 }
 
 function crearTablasCategorias() {
@@ -127,15 +130,15 @@ function crearTablasCategorias() {
     if (estado === "success") {
       const data = response;
       const tablaCategoria = $("#tablasCategoria").empty();
-      data.forEach(categoria => {
+      data.forEach((categoria) => {
         tablaCategoria.append(`
           <div class="container mt-4">
             <h2 class="section__titulo section__titulo--variante-categorias">Posiciones categoria ${categoria.nombreCategoria} - ${categoria.genero}</h2>
             <hr class="section__hr section__hr--titulo">
-            <table class="table table-danger table-hover table-striped">
+            <table class="table table-dark table-hover table-striped">
             <thead>
               <tr>
-              <th scope="col">Posicion</th>
+                <th scope="col">Posicion</th>
                 <th scope="col">Nombre</th>
                 <th scope="col">Dorsal</th>
                 <th scope="col">Tiempo</th>
@@ -147,14 +150,12 @@ function crearTablasCategorias() {
             </tbody>
           </table>
           </div>
-        `)
+        `);
         cargarPorCategoria(categoria.id);
-      })
+      });
     }
   });
 }
-
-
 
 cargarPosicionesHombres();
 cargarPosicionesMujer();

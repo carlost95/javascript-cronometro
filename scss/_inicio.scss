@@ -6,7 +6,7 @@
 
 .tabla__th,
 .tabla__td {
-    border: solid 1px rgba(0, 0, 0, 0.328);
+    border: solid 1rem rgba(0, 0, 0, 0.328);
     padding: 0.5%;
     display: flex;
     justify-content: center;
@@ -17,4 +17,10 @@
 .tabla__thead {
     background-color: #fa436b;
     color: whitesmoke;
+}
+
+.table-dark {
+    --bs-table-bg: #2872bd;
+    --bs-table-striped-bg: #27588a;
+    --bs-table-hover-bg: rgb(121, 169, 231);
 }

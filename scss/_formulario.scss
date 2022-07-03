@@ -8,7 +8,10 @@
 }
 
 .btn-enviar {
-    background-color: #ff0066;
+    background-color: #11277f;
     color: #fff;
     font-size: large;
+}
+.btn-enviar:hover {
+    color: rgba(255, 255, 255, 0.818);
 }

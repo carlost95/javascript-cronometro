@@ -2,15 +2,15 @@
     /* GRADIENTE */
     background: #240b36;
     background: linear-gradient(90deg,
-            #000000 8%,
-            #969696 25%,
-            #e7e7e7 45%,
-            #ff0066 65%,
-            #b30059 85%);
+            #000000f8 8%,
+            #939393eb 25%,
+            #e7e4e4 45%,
+            #201ddeca 65%,
+            #0f089c 85%);
 }
 
 .logo {
-    color: #ff0066;
+    color: #2840f3fe;
 }
 
 .navbar-container__logo {
@@ -36,4 +36,5 @@
 
 .nav-link:hover {
     font-style: italic;
+    color: #00fffb !important;
 }

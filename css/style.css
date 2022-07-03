@@ -16,11 +16,11 @@ body {
 .navbar-container__gradiente {
   /* GRADIENTE */
   background: #240b36;
-  background: linear-gradient(90deg, #000000 8%, #969696 25%, #e7e7e7 45%, #ff0066 65%, #b30059 85%);
+  background: linear-gradient(90deg, #000000f8 8%, #939393eb 25%, #e7e4e4 45%, #201ddeca 65%, #0f089c 85%);
 }
 
 .logo {
-  color: #ff0066;
+  color: #2840f3fe;
 }
 
 .navbar-container__logo {
@@ -46,6 +46,7 @@ body {
 
 .nav-link:hover {
   font-style: italic;
+  color: #00fffb !important;
 }
 
 .main {
@@ -55,7 +56,7 @@ body {
 }
 
 .section__titulo {
-  color: #a8135e;
+  color: #03274c;
   text-align: center;
   letter-spacing: 20px;
   font-size: 200%;
@@ -82,9 +83,13 @@ body {
 }
 
 .btn-enviar {
-  background-color: #ff0066;
+  background-color: #11277f;
   color: #fff;
   font-size: large;
+}
+
+.btn-enviar:hover {
+  color: rgba(255, 255, 255, 0.818);
 }
 
 .footer {
@@ -98,12 +103,39 @@ body {
   width: 100%;
 }
 
-.footer__autor {
-  color: white;
-  padding-bottom: 10px;
-}
-
 .footer ul {
   margin-bottom: 0px;
   padding-left: 0px;
+}
+
+.footer__autor {
+  color: white;
+  padding-bottom: 1rem;
+}
+
+.tabla {
+  background-color: #fd477ef5;
+  text-align: center;
+  width: 100%;
+}
+
+.tabla__th,
+.tabla__td {
+  border: solid 1rem rgba(0, 0, 0, 0.328);
+  padding: 0.5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 150%;
+}
+
+.tabla__thead {
+  background-color: #fa436b;
+  color: whitesmoke;
+}
+
+.table-dark {
+  --bs-table-bg: #2872bd;
+  --bs-table-striped-bg: #27588a;
+  --bs-table-hover-bg: rgb(121, 169, 231);
 }

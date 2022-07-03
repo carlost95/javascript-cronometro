@@ -22,5 +22,7 @@
     "node-sass": "^6.0.1",
     "nodemon": "^2.0.13"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.1.1"
+  }
 }
